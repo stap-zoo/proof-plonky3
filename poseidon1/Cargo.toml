@@ -1,0 +1,42 @@
+[package]
+name = "poseidon1"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Poseidon1, wrapped around p3-poseidon1-air. The baseline that makes the Poseidon1 to Poseidon2 delta measured."
+
+# Wrapped (POLICY §1): the upstream implementation is the artifact. No
+# columns/air/generation file here, because there is nothing of ours to drift.
+[dependencies]
+harness.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-matrix.workspace = true
+p3-uni-stark.workspace = true
+p3-poseidon1.workspace = true
+p3-poseidon1-air.workspace = true
+
+# The fields are *dependencies*, not dev-dependencies: an instance is a field's
+# own published round constants plus its circulant MDS column, so `params.rs`
+# names them (POLICY §4 — what we wrap carries upstream's values).
+# `p3-monty-31` is here for the `MDSUtils` trait alone, which is where BabyBear's
+# and KoalaBear's MDS columns live.
+p3-baby-bear.workspace = true
+p3-goldilocks.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+p3-monty-31.workspace = true
+
+# The seeded-input trace generator of POLICY §7: the harness owns the seed, the
+# construction owns turning it into inputs. Upstream's own random generator is
+# not usable for it — it hardcodes a `SmallRng` seeded with 1, which no other
+# construction draws from.
+rand.workspace = true
+rand_xoshiro.workspace = true
+
+[dev-dependencies]
+p3-symmetric.workspace = true
+
+[lints]
+workspace = true

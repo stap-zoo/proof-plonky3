@@ -1,0 +1,40 @@
+[package]
+name = "poseidon2"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Poseidon2, wrapped around p3-poseidon2-air."
+
+# Wrapped (POLICY §1): the upstream implementation is the artifact. No
+# columns/air/generation file here, because there is nothing of ours to drift.
+[dependencies]
+harness.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-matrix.workspace = true
+p3-uni-stark.workspace = true
+p3-poseidon2.workspace = true
+p3-poseidon2-air.workspace = true
+
+# The four fields are *dependencies*, not dev-dependencies: an instance is a
+# field's own published constant set plus its `GenericPoseidon2LinearLayers`
+# impl, so `params.rs` and `instances.rs` name them (POLICY §4 — what we wrap
+# carries upstream's values).
+p3-baby-bear.workspace = true
+p3-goldilocks.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+
+# The seeded-input trace generator of POLICY §7: the harness owns the seed, the
+# construction owns turning it into inputs. Upstream's own random generator is
+# not usable for it — it hardcodes a `SmallRng` seeded with 1, which no other
+# construction draws from.
+rand.workspace = true
+rand_xoshiro.workspace = true
+
+[dev-dependencies]
+p3-symmetric.workspace = true
+
+[lints]
+workspace = true

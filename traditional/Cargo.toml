@@ -1,0 +1,37 @@
+[package]
+name = "traditional"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "The traditional (Boolean-domain) hash functions Plonky3 arithmetizes, wrapped for the shared harness. Not a POLICY §1 construction and not on POLICY §3's grid."
+
+# Wrapped only (POLICY §1): upstream's AIR and upstream's trace generator are
+# the artifact, forwarded verbatim. This crate adds no round function, no
+# constraint and no constant.
+[dependencies]
+harness.workspace = true
+
+p3-air.workspace = true
+p3-blake3-air.workspace = true
+p3-field.workspace = true
+p3-keccak-air.workspace = true
+p3-matrix.workspace = true
+p3-sha256-air.workspace = true
+p3-uni-stark.workspace = true
+
+# The harness gives every construction the same measurement RNG seed. Upstream's
+# convenience generators own a fixed seed of their own, so the adapters draw
+# inputs from this shared source and forward them to upstream's input-taking
+# generator — exactly as `monolith` does.
+rand.workspace = true
+rand_xoshiro.workspace = true
+
+[dev-dependencies]
+p3-koala-bear.workspace = true
+
+# The limb-decoding test compares this crate's adapter against upstream's own
+# generator on the same words: the one thing here that upstream cannot check.
+p3-uni-stark.workspace = true
+
+[lints]
+workspace = true

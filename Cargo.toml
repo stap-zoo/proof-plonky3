@@ -1,0 +1,141 @@
+[workspace]
+resolver = "3"
+members = [
+    # Shared layers. `harness` never depends on a construction (POLICY §5).
+    "harness",
+    "reference",
+
+    # Constructions. Wrapped ones (POLICY §1) carry no columns/air/generation.
+    "poseidon2",
+    "poseidon1",
+    "monolith",
+    "rescue-prime",
+    "neptune",
+    "anemoi",
+    "griffin",
+    "tip5",
+    "xhash",
+    "psquarehash",
+    "gmimc",
+    "gmimc2",
+
+    # Not a construction (POLICY §1) and not on the grid (POLICY §3): the
+    # traditional hashes the introduction table compares against.
+    "traditional",
+
+    # The only crate that knows which hashes exist.
+    "bench",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace.lints.rust]
+missing_docs = "warn"
+unused_must_use = "deny"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[workspace.dependencies]
+# ---------------------------------------------------------------------------
+# Plonky3: ONE pinned revision for every p3-* crate (POLICY §5, §11).
+#
+# f5b7977 is `main` as of 2026-08-13. It is the first revision that carries all
+# four things this repository needs upstream:
+#   * `p3-poseidon1-air`, `p3-poseidon2-air`, `p3-monolith-air` — the three
+#     wrapped AIRs of POLICY §1;
+#   * `p3-security` — `StarkSecurityParams::from_air(..).security_bits()`, the
+#     fixed-security rule of POLICY §7;
+#   * `p3-air::symbolic::{AirLayout, get_max_constraint_degree,
+#     get_symbolic_constraints}` — the pinned cost columns of POLICY §11;
+#   * `p3-lookup` + `p3-batch-stark` — the deferred LogUp path of POLICY §12.
+#
+# Changing this revision moves every measured number: it is pinned with them
+# (POLICY §11) and updating it is a deliberate, reported change.
+# ---------------------------------------------------------------------------
+p3-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-blake3-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-keccak-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-sha256-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-baby-bear = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-batch-stark = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-challenger = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-circle = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-commit = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-dft = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-field = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-field-testing = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-fri = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-goldilocks = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-keccak = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-koala-bear = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-lookup = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-matrix = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-maybe-rayon = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-mds = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-merkle-tree = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-mersenne-31 = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-monolith = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-monolith-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-monty-31 = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-poseidon1 = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-poseidon1-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-poseidon2 = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-poseidon2-air = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-rescue = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-security = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-symmetric = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-uni-stark = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+p3-util = { git = "https://github.com/Plonky3/Plonky3.git", rev = "f5b7977e5c89adc8375b5c63a5a5092985b1f603" }
+
+# Third party. Versions follow Plonky3's own workspace so the lockfile unifies.
+blake3 = { version = "1.8", default-features = false }
+clap = { version = "4.6.1", features = ["derive"] }
+postcard = { version = "1.1.3", default-features = false }
+rand = { version = "0.10.1" }
+rand_xoshiro = "0.8.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.150"
+sha2 = { version = "0.11.0", default-features = false }
+sha3 = "0.10"
+tracing = "0.1.44"
+tracing-forest = "0.3.1"
+tracing-subscriber = { version = "0.3.23", features = ["std", "env-filter"] }
+
+# Local crates.
+harness = { path = "harness" }
+reference = { path = "reference" }
+
+anemoi = { path = "anemoi" }
+gmimc = { path = "gmimc" }
+gmimc2 = { path = "gmimc2" }
+griffin = { path = "griffin" }
+monolith = { path = "monolith" }
+neptune = { path = "neptune" }
+poseidon1 = { path = "poseidon1" }
+poseidon2 = { path = "poseidon2" }
+psquarehash = { path = "psquarehash" }
+rescue-prime = { path = "rescue-prime" }
+tip5 = { path = "tip5" }
+traditional = { path = "traditional" }
+xhash = { path = "xhash" }
+
+# ---------------------------------------------------------------------------
+# Measurements are release-only (POLICY §10, §11): `prove` runs
+# `check_constraints` itself under `debug_assertions`, so a debug number is a
+# number for a different program.
+# ---------------------------------------------------------------------------
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+debug = false
+
+# `cargo test` should still be fast enough to run the KATs and the negative
+# tests, while keeping `debug_assertions` on — that is what catches layout
+# mistakes early (POLICY §10).
+[profile.test]
+opt-level = 2

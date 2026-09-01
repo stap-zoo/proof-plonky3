@@ -1,0 +1,33 @@
+[package]
+name = "psquarehash"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "pSquareHash: native permutation and AIR, both written here."
+
+[dependencies]
+harness.workspace = true
+# `_init_cons` for the generated instances: BabyBear and KoalaBear have no pinned
+# constants in `../ref`, only a derivation (POLICY §3).
+reference.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-matrix.workspace = true
+p3-maybe-rayon.workspace = true
+p3-uni-stark.workspace = true
+
+# The seeded-input trace generator of POLICY §7: the harness owns the seed, the
+# construction owns turning it into inputs.
+rand.workspace = true
+rand_xoshiro.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+p3-air.workspace = true
+p3-baby-bear.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,33 @@
+[package]
+name = "tip5"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Tip5 (and Tip4, Tip4'): native permutation and AIR, both written here."
+
+# The default is the in-AIR-decomposition baseline (POLICY §12). The columns,
+# AIR, tables and generator under src/logup are a separate arithmetization of
+# the same permutation and never alter that baseline.
+[dependencies]
+harness.workspace = true
+reference.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-lookup.workspace = true
+p3-matrix.workspace = true
+p3-maybe-rayon.workspace = true
+p3-mds.workspace = true
+p3-symmetric.workspace = true
+p3-uni-stark.workspace = true
+p3-util.workspace = true
+rand.workspace = true
+rand_xoshiro.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+p3-batch-stark.workspace = true
+p3-goldilocks.workspace = true
+
+[lints]
+workspace = true

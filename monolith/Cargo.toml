@@ -1,0 +1,37 @@
+[package]
+name = "monolith"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Monolith's wrapped baseline and separate lookup-backed AIR."
+
+# The default remains the exact upstream wrapper (POLICY §1). The columns,
+# AIR and generator under src/logup are a separate arithmetization and never
+# alter that baseline.
+[dependencies]
+harness.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-matrix.workspace = true
+p3-mds.workspace = true
+p3-lookup.workspace = true
+p3-uni-stark.workspace = true
+p3-goldilocks.workspace = true
+p3-mersenne-31.workspace = true
+p3-monolith.workspace = true
+p3-monolith-air.workspace = true
+
+# The harness gives the measurement RNG seed to each construction.  The wrapped
+# AIR's convenience generator owns a fixed seed, so the adapter draws inputs
+# from this shared source and forwards them to upstream's input-taking generator.
+rand.workspace = true
+rand_xoshiro.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+p3-batch-stark.workspace = true
+p3-symmetric.workspace = true
+
+[lints]
+workspace = true

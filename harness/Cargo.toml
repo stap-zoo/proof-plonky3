@@ -1,0 +1,49 @@
+[package]
+name = "harness"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "The permutation and gadget contracts a construction is written against, and the configurations, cost extraction and runners it is measured by. Knows no construction."
+
+# The hard rule of POLICY §5: `harness` never learns which hashes exist.
+# Nothing below may be a construction crate, and nothing below may reach one
+# transitively. `bench` asserts it against this file's text.
+[dependencies]
+p3-air.workspace = true
+p3-batch-stark.workspace = true
+p3-baby-bear.workspace = true
+p3-challenger.workspace = true
+p3-circle.workspace = true
+p3-commit.workspace = true
+p3-dft.workspace = true
+p3-field.workspace = true
+p3-fri.workspace = true
+p3-goldilocks.workspace = true
+p3-keccak.workspace = true
+p3-koala-bear.workspace = true
+p3-lookup.workspace = true
+p3-matrix.workspace = true
+p3-maybe-rayon.workspace = true
+p3-merkle-tree.workspace = true
+p3-mersenne-31.workspace = true
+p3-security.workspace = true
+p3-symmetric.workspace = true
+p3-uni-stark.workspace = true
+p3-util.workspace = true
+
+postcard = { workspace = true, features = ["alloc"] }
+rand.workspace = true
+serde.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+# The gadget tests need `alpha^{-1} mod (p-1)`, which is a parameter derivation
+# and therefore lives in `reference`. A dev-dependency keeps that direction
+# one-way: nothing in an AIR or measurement path depends on the reference.
+reference.workspace = true
+
+p3-field-testing.workspace = true
+rand_xoshiro.workspace = true
+
+[lints]
+workspace = true

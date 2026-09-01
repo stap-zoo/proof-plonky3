@@ -1,0 +1,60 @@
+[package]
+name = "bench"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Every construction's instances, the cross-construction guards, and the one command. Everything measured comes out of here."
+
+[lib]
+name = "bench"
+path = "src/lib.rs"
+
+[[bin]]
+name = "bench"
+path = "src/main.rs"
+
+# The only crate allowed to know which hashes exist (POLICY §5). The
+# constructions depend on `harness`, so `harness` cannot depend on them, so the
+# aggregation has to live above both — here.
+[dependencies]
+harness.workspace = true
+
+anemoi.workspace = true
+gmimc.workspace = true
+gmimc2.workspace = true
+griffin.workspace = true
+monolith.workspace = true
+neptune.workspace = true
+poseidon1.workspace = true
+poseidon2.workspace = true
+psquarehash.workspace = true
+rescue-prime.workspace = true
+tip5.workspace = true
+xhash.workspace = true
+
+# Not a construction and not on POLICY §3's grid: the introduction table's
+# traditional-hash baseline. It registers no grid point, so the coverage guard
+# never sees it; it is here because `plan::intro_koalabear` names its AIRs.
+traditional.workspace = true
+
+# The measurement plan names one concrete field per configuration cell, so the
+# four field crates are dependencies of the runner and not only of its tests.
+p3-air.workspace = true
+p3-baby-bear.workspace = true
+p3-commit.workspace = true
+p3-field.workspace = true
+p3-goldilocks.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+p3-uni-stark.workspace = true
+
+clap.workspace = true
+tracing.workspace = true
+tracing-forest.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

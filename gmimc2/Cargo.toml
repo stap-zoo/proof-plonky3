@@ -1,0 +1,34 @@
+[package]
+name = "gmimc2"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "GMiMC2 (GMiMC-erf2): native permutation and AIR, both written here."
+
+[dependencies]
+harness.workspace = true
+# `reference::sampler` reproduces the oracle's SHAKE256 draw. The oracle is
+# `../gnark-hashes/gmimc2_ref.py`, not `../ref` — GMiMC2 is the one construction
+# here whose vectors come from the second trust boundary (POLICY §4, and
+# `vectors/README.md`) — but the sampler it uses is `../ref`'s own, unchanged.
+reference.workspace = true
+
+p3-air.workspace = true
+p3-field.workspace = true
+p3-matrix.workspace = true
+p3-uni-stark.workspace = true
+
+# The seeded-input trace generator of POLICY §7: the harness owns the seed, the
+# construction owns turning it into inputs.
+rand.workspace = true
+rand_xoshiro.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+p3-baby-bear.workspace = true
+p3-goldilocks.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+
+[lints]
+workspace = true

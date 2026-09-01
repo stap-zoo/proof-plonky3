@@ -1,0 +1,27 @@
+[package]
+name = "reference"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "`../ref` in Rust: its known-answer vectors and its parameter derivations. The only ground truth (POLICY §4)."
+
+[dependencies]
+p3-field.workspace = true
+
+serde_json.workspace = true
+# The three XOFs `../ref`'s `utils/sampler.py` draws parameters from. SHAKE is
+# the common case; BLAKE3 and SHA-256 model Tip5's reference derivations. The
+# exact exported Tip4/Tip5 instances are currently loaded from params.json, but
+# keeping these samplers here documents and tests the derivation boundary.
+blake3.workspace = true
+sha2.workspace = true
+sha3.workspace = true
+
+[dev-dependencies]
+p3-baby-bear.workspace = true
+p3-goldilocks.workspace = true
+p3-koala-bear.workspace = true
+p3-mersenne-31.workspace = true
+
+[lints]
+workspace = true

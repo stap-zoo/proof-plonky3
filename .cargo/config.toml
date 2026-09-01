@@ -1,0 +1,16 @@
+# The environment is pinned with the numbers (POLICY §11).
+#
+# `target-cpu` decides `F::Packing::WIDTH`, which decides how much of the
+# vectorized trace generation is SIMD and therefore moves every generate time.
+# Setting it here rather than in a shell export means every build in this
+# workspace — `cargo test`, `cargo bench`, an editor's check — agrees on it.
+#
+# It is machine-dependent by construction: `native` on one host is not `native`
+# on another. The pinned-number test records the *resolved* target features
+# alongside the numbers, so a table always says which machine produced it.
+[build]
+rustflags = ["-Ctarget-cpu=native"]
+
+# The other three things that move the numbers are not settable here and are
+# recorded with them instead: the release profile (see the workspace manifest),
+# `RAYON_NUM_THREADS`, and the single pinned Plonky3 revision.
